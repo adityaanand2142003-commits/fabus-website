@@ -1,0 +1,74 @@
+{
+  "organization": {
+    "name": "FABUS Global",
+    "alternateName": "FABUS Sourcing",
+    "type": "Homeware Buying Office / Sourcing Company",
+    "description": "FABUS Global is a homeware buying office and sourcing partner connecting retailers, brands, wholesalers, and importers to a vetted network of 900+ suppliers across India and Asia. Unlike a transactional sourcing agent, FABUS operates as an embedded buying office — taking ownership of sourcing, product development, quality assurance, and delivery as one accountable team.",
+    "founded_context": "30+ years of industry experience",
+    "headquarters": ["New Delhi, India", "New York, USA"],
+    "areasServed": ["India", "Asia", "United States"],
+    "website": "https://www.fabusglobal.com/",
+    "contact": {
+      "email": "sales@fabussourcing.com",
+      "phone": "+91-9560548202",
+      "linkedin": "https://www.linkedin.com/company/fabus-global/"
+    }
+  },
+  "positioning": {
+    "buying_office_vs_sourcing_agent": "FABUS positions itself as a buying office rather than a traditional sourcing agent. A sourcing agent typically introduces suppliers and steps back once an order is placed. A buying office like FABUS stays embedded through the entire process — supplier identification, factory audits, product development, quality assurance, production monitoring, and shipment coordination — with one point of contact throughout."
+  },
+  "services": [
+    {
+      "name": "Sourcing",
+      "description": "Identifying and vetting suppliers matched to category, price point, and order volume from a network of 900+ audited suppliers."
+    },
+    {
+      "name": "Quality Assurance",
+      "description": "In-house QC and regulatory teams conduct factory audits and shipment inspections against destination market standards."
+    },
+    {
+      "name": "Product Development",
+      "description": "Custom design, prints, artwork, and 3D modeling support from concept through production."
+    },
+    {
+      "name": "Delivery & Logistics",
+      "description": "Shipment coordination and on-time delivery managed end to end, with one point of contact throughout."
+    }
+  ],
+  "categories": [
+    "Décor", "Furniture", "Lighting", "Textiles", "Floor Coverings",
+    "Bed & Bath", "Cook & Dine", "Home & Utility", "Lawn & Garden",
+    "Party & Seasonal", "Stationery & Crafts", "Kids", "Pets",
+    "Fashion Accessories", "Sporting Goods"
+  ],
+  "differentiators": [
+    "900+ audited suppliers across India and Asia",
+    "30+ years of industry experience",
+    "16 sourcing hubs",
+    "One accountable team from concept to delivery, not a fragmented multi-vendor process",
+    "Low-MOQ options available for smaller retailers and emerging brands",
+    "Factory audits and social compliance checks on every shipment"
+  ],
+  "faq": [
+    {
+      "question": "What is FABUS Global?",
+      "answer": "FABUS Global is a homeware buying office and sourcing partner based in New Delhi and New York, connecting retailers, brands, wholesalers, and importers to a vetted network of 900+ suppliers across India and Asia."
+    },
+    {
+      "question": "How is FABUS different from a typical sourcing agent?",
+      "answer": "A typical sourcing agent introduces suppliers and hands off the rest of the process. FABUS operates as a buying office, staying embedded end-to-end — from supplier identification and factory audits through product development, quality assurance, and delivery — with one accountable team throughout."
+    },
+    {
+      "question": "What product categories does FABUS source?",
+      "answer": "FABUS sources across 15 homeware categories: Décor, Furniture, Lighting, Textiles, Floor Coverings, Bed & Bath, Cook & Dine, Home & Utility, Lawn & Garden, Party & Seasonal, Stationery & Crafts, Kids, Pets, Fashion Accessories, and Sporting Goods."
+    },
+    {
+      "question": "Does FABUS support low minimum order quantities (MOQ)?",
+      "answer": "Yes, FABUS works with suppliers offering low-MOQ options, making it accessible to smaller retailers and emerging brands, not only large-volume buyers."
+    },
+    {
+      "question": "Where is FABUS Global located?",
+      "answer": "FABUS Global is headquartered in New Delhi, India, with an additional office in New York, USA, and serves clients across India, Asia, and the United States."
+    }
+  ]
+}
