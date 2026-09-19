@@ -2178,6 +2178,82 @@
   .service-stack .service-card{
     max-height:128px !important;
   }
+  /* The 128px above was tuned to leave a little breathing room below
+     each card's icon/title before the NEXT card overlaps it — but the
+     last card ("Program Oversight") has no next card to overlap it, so
+     that extra room instead exposes the top of its first bullet point
+     even while collapsed. The last card doesn't need the breathing
+     room in the first place (nothing overlaps it), so it goes back to
+     a tight collapse height that ends right at the icon/title row. */
+  .service-stack .service-card:last-child{
+    max-height:100px !important;
+  }
+}
+
+/* ============================================================
+   MOBILE ROUND 7 — full-bleed hero redesign
+   ============================================================
+   Reference: video fills the entire hero area edge to edge on every
+   side (not just left/right as before), with text laid directly over
+   it instead of living in its own strip below the video. Re-uses the
+   same three pieces of copy that were already there (headline, subline,
+   CTA) rather than introducing new ones — see .hero-mobile-overlay,
+   which duplicates the headline/subline as an overlay pair and hides
+   the original text block, while the original CTA link is kept (for
+   one working button) and simply repositioned + restyled in place. */
+.hero-mobile-overlay{ display:none; } /* default (desktop/tablet): out of the layout; switched on below the breakpoint */
+@media (max-width:820px){
+  .hero-pin{
+    padding:0 !important;
+    gap:0 !important;
+  }
+  .panel-wrap{
+    width:100% !important; height:100% !important; max-width:100% !important;
+    flex-shrink:0 !important; /* fills the fixed hero-pin box exactly; no longer needs to shrink for anything below it, since nothing sits below it anymore */
+    border-radius:0 !important;
+  }
+
+  /* Original text block: keep the CTA (repositioned below), hide the
+     old headline/subline text since .hero-mobile-overlay says the same
+     thing directly over the video now. */
+  #sideCopy{
+    position:absolute !important; inset:0 !important; z-index:3;
+    display:flex !important; align-items:flex-end !important; justify-content:flex-end !important;
+    padding:1.35rem !important; margin:0 !important; max-width:none !important;
+    pointer-events:none;
+  }
+  #sideCopy .hero-headline, #sideCopy .hero-subline{ display:none !important; }
+  #sideCopy .cta{
+    pointer-events:auto;
+    background:transparent !important; color:#fff !important;
+    border:1.5px solid rgba(255,255,255,0.85) !important;
+    box-shadow:none !important; backdrop-filter:blur(2px);
+  }
+  #sideCopy .cta::after{ color:#fff; }
+
+  .hero-mobile-overlay{
+    display:flex; position:absolute; inset:0; z-index:2;
+    flex-direction:column; justify-content:space-between;
+    padding:1.5rem 1.35rem; pointer-events:none;
+  }
+  .hero-mobile-eyebrow{
+    margin:0; color:#fff; font-family:'Outfit',sans-serif; font-weight:600;
+    font-size:1.05rem; line-height:1.3; letter-spacing:.1em; text-transform:uppercase;
+    text-shadow:0 2px 12px rgba(0,0,0,0.4);
+  }
+  .hero-mobile-scroll{
+    display:flex; flex-direction:column; align-items:flex-start; gap:.5rem;
+    align-self:flex-start;
+  }
+  .hero-mobile-tick{
+    display:block; width:20px; height:2px; background:var(--orange);
+  }
+  .hero-mobile-scroll-text{
+    color:#fff; font-family:'Outfit',sans-serif; font-weight:600;
+    font-size:.8rem; letter-spacing:.12em; text-transform:uppercase;
+    text-shadow:0 2px 12px rgba(0,0,0,0.4);
+  }
+  .hero-mobile-arrow{ font-style:normal; }
 }
 
 </style>
@@ -2282,6 +2358,16 @@
       <div class="loading" id="loadingMsg">
         <span id="loadingText">Loading… 0%</span>
         <div class="loading-bar"><div class="loading-fill" id="loadingFill"></div></div>
+      </div>
+      <!-- mobile-only overlay: same message as the side-copy below, laid
+           directly over the full-bleed video instead of in its own
+           reserved strip beneath it -->
+      <div class="hero-mobile-overlay">
+        <p class="hero-mobile-eyebrow">Sourced<br>With Intent</p>
+        <span class="hero-mobile-scroll">
+          <i class="hero-mobile-tick"></i>
+          <span class="hero-mobile-scroll-text">Scroll <span class="hero-mobile-arrow">&darr;</span></span>
+        </span>
       </div>
       </div>
 
