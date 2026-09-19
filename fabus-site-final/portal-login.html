@@ -114,12 +114,26 @@
     </div>
     <div class="portal-row-between">
       <label class="portal-remember"><input type="checkbox"> Remember me</label>
-      <a href="#" class="portal-forgot">Forgot password?</a>
+      <a href="#" class="portal-forgot" id="portalForgotLink">Forgot password?</a>
     </div>
     <button type="submit" class="portal-submit">Sign In</button>
   </form>
 
   <p class="portal-footer-note">Don't have access yet? <a href="portal-signup.html">Sign Up</a></p>
+
+  <!-- Forgot-password panel: hidden until "Forgot password?" is clicked,
+       swaps in for the sign-in form itself (same card, no separate page) -->
+  <div id="portalForgotPanel" style="display:none;">
+    <div class="portal-error" id="portalForgotError"></div>
+    <form id="portalForgotForm">
+      <div class="portal-field">
+        <label class="portal-label" for="portalForgotEmail">Email Address</label>
+        <input type="email" id="portalForgotEmail" class="portal-input" placeholder="you@company.com">
+      </div>
+      <button type="submit" class="portal-submit">Send Reset Link</button>
+    </form>
+    <p class="portal-footer-note"><a href="#" id="portalForgotBack">&larr; Back to Sign In</a></p>
+  </div>
 </div>
 
 <script>
@@ -131,6 +145,50 @@
   document.getElementById('portalDismiss').addEventListener('click', function(){
     if(window.history.length > 1){ window.history.back(); }
     else { window.location.href = 'index.html'; }
+  });
+
+  // Forgot-password flow: swap the sign-in form for the reset panel,
+  // in the same card, rather than linking to a separate (nonexistent) page.
+  var loginForm = document.getElementById('portalLoginForm');
+  var loginError = document.getElementById('portalError');
+  var loginFooterNote = document.querySelector('.portal-card > .portal-footer-note');
+  var forgotPanel = document.getElementById('portalForgotPanel');
+  var forgotError = document.getElementById('portalForgotError');
+  var forgotForm = document.getElementById('portalForgotForm');
+  var forgotEmail = document.getElementById('portalForgotEmail');
+
+  function showForgotPanel(){
+    loginForm.style.display = 'none';
+    loginError.style.display = 'none';
+    if (loginFooterNote) loginFooterNote.style.display = 'none';
+    forgotError.style.display = 'none';
+    forgotEmail.value = '';
+    forgotPanel.style.display = 'block';
+  }
+  function showLoginForm(){
+    forgotPanel.style.display = 'none';
+    loginForm.style.display = '';
+    if (loginFooterNote) loginFooterNote.style.display = '';
+  }
+
+  document.getElementById('portalForgotLink').addEventListener('click', function(e){
+    e.preventDefault();
+    showForgotPanel();
+  });
+  document.getElementById('portalForgotBack').addEventListener('click', function(e){
+    e.preventDefault();
+    showLoginForm();
+  });
+
+  forgotForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var email = forgotEmail.value.trim();
+    if (!email){
+      forgotError.innerHTML = 'Please enter your email to continue.';
+    } else {
+      forgotError.innerHTML = 'The email you entered isn\'t registered yet. New here? <a href="portal-signup.html">Sign up</a> to get started.';
+    }
+    forgotError.style.display = 'block';
   });
 </script>
 
