@@ -1377,8 +1377,9 @@
 .whatwedo-headline{
   font-family:'Playfair Display', serif; font-weight:400; font-style:normal; color:#241F18;
   font-size:41px; line-height:1.08; letter-spacing:-0.01em;
-  margin:0; flex:1; transform:skewX(-12deg);
+  margin:0; flex:1;
 }
+.whatwedo-headline .wwd-line{ display:inline-block; transform:skewX(-12deg); }
 .whatwedo-headline .accent{ color:#241F18; }
 .whatwedo-lead{
   font-size:.98rem; line-height:1.7; color:rgba(36,31,24,0.65); margin:0;
@@ -1675,10 +1676,12 @@
   .whatwedo-headline{
     font-size:1.5rem !important;
     font-style:normal !important;
-    transform:skewX(-10deg) !important;
-    display:inline-block;
     line-height:1.35;
     overflow-wrap:break-word;
+  }
+  .whatwedo-headline .wwd-line{
+    transform:skewX(-10deg) !important;
+    display:inline-block !important;
   }
   .whatwedo-top{ flex-direction:column; gap:1.1rem; align-items:flex-start; }
   .whatwedo-lead{ max-width:100%; padding-right:0; }
@@ -1686,7 +1689,7 @@
 
   /* --- 8. SOURCING? WITH FABUS: same treatment --- */
   .services-headline{
-    font-size:1.45rem !important;
+    font-size:1.6rem !important;
     font-style:normal !important;
     transform:skewX(-10deg) !important;
     display:inline-block;
@@ -1702,7 +1705,7 @@
   .leader-card h3{ font-size:1.35rem; }
   .leadership-top{ flex-direction:column; align-items:flex-start; gap:.75rem; }
   .leadership-headline{ font-size:1.7rem; }
-  .leadership-headline .accent{ transform:none; font-style:italic; }
+  .leadership-headline .accent{ transform:none; font-style:normal; }
   .leader-grid{ gap:2.5rem; }
 
   /* --- 10. CONTACT: clean grid, no scatter --- */
@@ -1725,14 +1728,16 @@
   .supply-headline{ font-size:1.5rem !important; }
 
   /* --- 12. FOOTER: drop desktop pixel offsets --- */
+  .site-footer{ padding-top:2rem !important; }
   .footer-copyright-text{ position:static !important; left:auto !important; }
   .footer-legal-real{ position:static !important; transform:none !important; }
   .footer-simple-grid{
     grid-template-columns:1fr !important; padding:0 1.35rem 2rem !important;
-    gap:1.75rem !important; text-align:center;
+    gap:1.25rem !important; text-align:center;
   }
-  .footer-left{ align-items:center; }
-  .footer-logo-full{ height:130px; }
+  .footer-left{ align-items:center; gap:0; }
+  .footer-logo-full{ height:130px; margin:0; }
+  .footer-new-tagline{ display:none !important; }
   .footer-right{ max-width:100%; text-align:center; }
   .footer-contact-lines{ align-items:center; }
   .footer-bottom-bar-inner{ flex-direction:column; gap:.65rem; padding:0 1.35rem; text-align:center; }
@@ -1741,7 +1746,6 @@
 
 @media (max-width:420px){
   .whatwedo-headline{ font-size:1.45rem !important; }
-  .services-headline{ font-size:1.4rem !important; }
   .contact-headline{ font-size:1.9rem !important; }
   .contact-grid{ grid-template-columns:1fr; }
   .contact-btn:first-child{ border-left:1px solid rgba(36,31,24,0.2); }
@@ -1789,13 +1793,22 @@
   .cert-logo-lg{ width:152px !important; height:62px !important; }
 
   /* --- headings: upright font + skew, never italic font --- */
-  .whatwedo-headline,
   .services-headline,
-  .leadership-headline,
   .contact-headline{
     font-style:normal !important;
     transform:skewX(-10deg) !important;
     display:inline-block !important;
+  }
+  .whatwedo-headline{
+    font-style:normal !important;
+  }
+  .whatwedo-headline .wwd-line{
+    transform:skewX(-10deg) !important;
+    display:inline-block !important;
+  }
+  .leadership-headline{
+    font-style:normal !important;
+    transform:none !important;
   }
   .whatwedo-headline .accent,
   .services-headline .accent,
@@ -2346,7 +2359,7 @@
 <section class="whatwedo" id="whatwedo">
   <div class="wrap">
     <div class="whatwedo-header">
-      <h2 class="whatwedo-headline">One accountable chain,<br>from factory floor to <span class="accent">your DC</span>.</h2>
+      <h2 class="whatwedo-headline"><span class="wwd-line">One accountable chain,</span><br><span class="wwd-line">from factory floor to <span class="accent">your DC</span>.</span></h2>
       <p class="whatwedo-lead">One sourcing journey. One accountable team. From first concept to final shipment, FABUS takes ownership at every step: sourcing, product development and design to audits with flawless delivery. Our team mitigates supply chain risk, while you stay focused on the business.</p>
     </div>
   </div>
@@ -4617,7 +4630,6 @@
   if (window.matchMedia('(max-width:640px)').matches === false) return;
   var cards = document.querySelectorAll('.service-stack .service-card');
   if (!cards.length) return;
-  cards[0].classList.add('is-open');
   cards.forEach(function(card){
     card.addEventListener('click', function(){
       var wasOpen = card.classList.contains('is-open');
