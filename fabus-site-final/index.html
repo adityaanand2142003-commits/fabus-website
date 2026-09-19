@@ -1447,7 +1447,7 @@
 }
 @media (max-width:768px){
   .partner-mq-logo{ height:56px; }
-  .partners-track{ gap:3rem; }
+  .partners-track{ gap:3rem; animation-duration:34s; }
 }
 
 @media (min-width:768px){
@@ -1705,7 +1705,7 @@
   .leader-card h3{ font-size:1.35rem; }
   .leadership-top{ flex-direction:column; align-items:flex-start; gap:.75rem; }
   .leadership-headline{ font-size:1.7rem; }
-  .leadership-headline .accent{ transform:none; font-style:normal; }
+  .leadership-headline .accent{ transform:skewX(-12deg); font-style:normal; }
   .leader-grid{ gap:2.5rem; }
 
   /* --- 10. CONTACT: clean grid, no scatter --- */
@@ -1812,12 +1812,17 @@
   }
   .whatwedo-headline .accent,
   .services-headline .accent,
-  .leadership-headline .accent,
   .contact-headline .accent{
     font-style:normal !important;
     font-family:inherit !important;
     transform:none !important;
     display:inline !important;
+  }
+  .leadership-headline .accent{
+    font-style:normal !important;
+    font-family:inherit !important;
+    transform:skewX(-12deg) !important;
+    display:inline-block !important;
   }
   /* "Sourcing?" upright, rest skewed */
   .services-headline{ transform:none !important; }
@@ -1846,6 +1851,7 @@
     box-shadow:0 -8px 22px rgba(36,31,24,0.22) !important;
   }
   .service-stack .service-card:last-child{ margin-bottom:0 !important; }
+  .sc-word-desktop-only{ display:none !important; }
 
   /* --- supply with us: centred heading, one-line button --- */
   .supply-card-left{ align-items:center !important; text-align:center !important; }
@@ -2451,7 +2457,7 @@
       <div class="service-card">
         <div class="service-card-head">
           <span class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6.3"/><path d="M8.8 9.1 11 11.4 15.3 6.4"/><path d="M8.3 14.6 6.4 21.3 12 18.2 17.6 21.3 15.7 14.6"/></svg></span>
-          <h3>Credible Quality &amp; Compliance</h3>
+          <h3><span class="sc-word-desktop-only">Credible </span>Quality &amp; Compliance</h3>
         </div>
         <div class="service-card-body">
         <ul>
