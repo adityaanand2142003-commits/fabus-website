@@ -2141,10 +2141,14 @@
   .hero-subline{ font-size:.8rem !important; margin:0 0 .7rem !important; }
   .hero-pin .cta{ padding:.7rem 1.2rem !important; font-size:.7rem !important; }
 }
-@media (max-width:420px){
-  /* very short screens (e.g. SE-sized): a full-width video would be
-     taller than the space below the header and squeeze the button
-     out, so pull width in slightly here only, to guarantee it fits */
+@media (max-width:820px) and (max-height:700px){
+  /* SHORT screens only (a height query, not width — max-width:420 was
+     wrong here since it matches almost every phone by WIDTH, which is
+     why the video never reached true edge-to-edge before: nearly all
+     phones were being caught by that rule and pulled to 90%).
+     On a genuinely short screen a full-width portrait video would be
+     taller than the space below the header, so only here do we pull
+     it in slightly to guarantee the text/button still fit. */
   .panel-wrap{ width:90% !important; max-width:90% !important; margin:0 auto; }
   .hero-headline{ font-size:1.35rem !important; }
 }
@@ -2264,7 +2268,7 @@
       </div>
 
     <div class="side-copy" id="sideCopy">
-      <h1 class="hero-headline" id="headlineText">Scroll to<br class="hero-br">dress the<br class="hero-br">home</h1>
+      <h1 class="hero-headline" id="headlineText">Scroll to <br class="hero-br">dress the <br class="hero-br">home</h1>
       <p class="hero-subline">every piece sourced with intent.</p>
       <a href="#" class="cta" id="ctaBtn">Get a Free Sourcing Review</a>
     </div>
