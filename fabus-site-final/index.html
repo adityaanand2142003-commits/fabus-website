@@ -2157,14 +2157,17 @@
   .hero-pin .cta{ padding:.7rem 1.2rem !important; font-size:.7rem !important; }
 }
 @media (max-width:820px) and (max-height:700px){
-  /* SHORT screens only (a height query, not width — max-width:420 was
-     wrong here since it matches almost every phone by WIDTH, which is
-     why the video never reached true edge-to-edge before: nearly all
-     phones were being caught by that rule and pulled to 90%).
-     On a genuinely short screen a full-width portrait video would be
-     taller than the space below the header, so only here do we pull
-     it in slightly to guarantee the text/button still fit. */
-  .panel-wrap{ width:90% !important; max-width:90% !important; margin:0 auto; }
+  /* SHORT screens only. This used to pull panel-wrap's WIDTH in to 90%
+     to guarantee the text/button fit below a full-width portrait video —
+     but max-height:700px turns out to match a lot of real phones (any
+     phone where the visible viewport dips under 700px, e.g. with the
+     browser's own URL bar showing on load), so that rule was quietly
+     shrinking the video away from the edges on ordinary phones, not just
+     genuinely short screens. Width now stays 100% unconditionally —
+     .panel-wrap already has flex-shrink:1 + min-height:0 (set above),
+     so on a real height shortage flexbox shrinks the video's HEIGHT to
+     make room, never its width, so the edges never move. Only the text
+     size is trimmed here to keep the button visible. */
   .hero-headline{ font-size:1.35rem !important; }
 }
 
@@ -2867,17 +2870,25 @@
 
   function resizeCanvas(){
     const wrap = canvas.parentElement.getBoundingClientRect();
+    if (wrap.width === 0 || wrap.height === 0) return;
     // Canvas backing-store size was being set to raw CSS pixels, so on
     // retina/high-DPI phones the browser had to upscale a lower-res
     // bitmap to fill the display — the blur. Multiplying by devicePixelRatio
     // gives the canvas a sharp backing store at the screen's real pixel
     // density; capped at 2x since source frames are 900x1602 and going
     // higher would just upscale past the source's own resolution.
+    // NOTE: canvas.style.width/height are deliberately left alone here —
+    // #scrubCanvas already stretches to 100%/100% of its parent in CSS.
+    // An earlier version of this fix pinned them to a fixed px value,
+    // which stopped the canvas from tracking the box while the mobile
+    // browser's address bar animates in/out mid-scroll (the box resizes
+    // smoothly via dvh, but the canvas no longer followed) — that's what
+    // produced the black gap "readjusting" at the bottom of the video.
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = Math.round(wrap.width * dpr);
-    canvas.height = Math.round(wrap.height * dpr);
-    canvas.style.width = wrap.width + 'px';
-    canvas.style.height = wrap.height + 'px';
+    const newW = Math.round(wrap.width * dpr);
+    const newH = Math.round(wrap.height * dpr);
+    if (canvas.width !== newW) canvas.width = newW;
+    if (canvas.height !== newH) canvas.height = newH;
     drawFrame(currentFrame);
   }
 
@@ -2919,6 +2930,18 @@
 
   window.addEventListener('scroll', update, {passive:true});
   window.addEventListener('resize', resizeCanvas);
+  // window's 'resize' event only fires once the mobile browser's address
+  // bar has finished hiding/showing, but the box itself (sized with dvh)
+  // grows/shrinks smoothly as that animation runs. Watching the box's own
+  // size directly keeps the canvas in lock-step with it the whole time,
+  // instead of lagging one step behind and causing a black gap or a
+  // wrong-height video mid-scroll.
+  if (window.ResizeObserver){
+    new ResizeObserver(() => resizeCanvas()).observe(canvas.parentElement);
+  }
+  if (window.visualViewport){
+    window.visualViewport.addEventListener('resize', resizeCanvas);
+  }
   resizeCanvas();
   update();
 </script>
