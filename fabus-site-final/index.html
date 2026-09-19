@@ -2128,11 +2128,26 @@
     justify-content:flex-start !important;
     padding:.6rem 0 .7rem !important;
     gap:.5rem !important;
+    /* height:calc(100vh - 62px) elsewhere uses the mobile browser's
+       LARGEST possible viewport (address bar hidden). On load, before
+       any scroll, the address bar is usually visible, so the real
+       available height is smaller — the video (width-driven, so its
+       height is fixed by aspect-ratio) ends up taller than this box,
+       gets pushed down/clipped, and only "snaps" to look right after
+       the first scroll hides the bar and the box actually grows to
+       match. Then scrolling back up shows the bar again, the box
+       shrinks, and the fixed-height video appears to "leave the
+       edges". dvh/svh track the bar's real state instead of always
+       assuming it's hidden, so the box is correctly sized from the
+       very first paint and stays consistent in both scroll directions.
+       Unsupported browsers simply ignore these lines and keep the vh
+       fallback declared earlier in the cascade. */
+    height:calc(100dvh - 62px) !important;
   }
   .panel-wrap{
     width:100% !important; max-width:100% !important; height:auto !important;
     min-height:0 !important; flex-shrink:1 !important;
-    border-radius:0 !important;
+    border-radius:0 0 20px 20px !important;
   }
   .side-copy{ flex-shrink:0 !important; padding:0 1.1rem !important; }
   /* let the headline wrap naturally instead of 3 hard-broken lines */
@@ -2852,8 +2867,17 @@
 
   function resizeCanvas(){
     const wrap = canvas.parentElement.getBoundingClientRect();
-    canvas.width = wrap.width;
-    canvas.height = wrap.height;
+    // Canvas backing-store size was being set to raw CSS pixels, so on
+    // retina/high-DPI phones the browser had to upscale a lower-res
+    // bitmap to fill the display — the blur. Multiplying by devicePixelRatio
+    // gives the canvas a sharp backing store at the screen's real pixel
+    // density; capped at 2x since source frames are 900x1602 and going
+    // higher would just upscale past the source's own resolution.
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(wrap.width * dpr);
+    canvas.height = Math.round(wrap.height * dpr);
+    canvas.style.width = wrap.width + 'px';
+    canvas.style.height = wrap.height + 'px';
     drawFrame(currentFrame);
   }
 
