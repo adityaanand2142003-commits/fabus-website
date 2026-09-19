@@ -89,7 +89,7 @@
     font-family:'Inter',sans-serif; font-size:.76rem; color:#9A8768; margin:.4rem 0 0;
   }
   .form-input, .form-select{
-    width:100%; padding:.75rem .95rem; background:#FBE6C8; border:1.5px solid var(--orange);
+    width:100%; padding:.75rem .95rem; background:#FDF3E7; border:1.5px solid var(--orange);
     border-radius:8px; font-family:'Inter',sans-serif; font-size:.92rem; color:var(--ink);
     outline:none; transition:border-color .2s ease, box-shadow .2s ease;
   }
@@ -100,7 +100,7 @@
   .form-select-narrow{ flex:0 0 92px; }
   .file-drop{
     display:flex; align-items:center; justify-content:space-between; gap:.8rem;
-    padding:.9rem 1rem; background:#FBE6C8; border:1.5px dashed var(--orange);
+    padding:.9rem 1rem; background:#FDF3E7; border:1.5px dashed var(--orange);
     border-radius:8px; cursor:pointer; color:var(--ink); font-family:'Inter',sans-serif;
     font-size:.92rem; transition:border-color .2s ease, background .2s ease;
   }
@@ -112,7 +112,7 @@
   #submitBtn{ width:100%; justify-content:center; border:none; cursor:pointer; margin-top:.6rem; }
   #submitBtn:disabled{ opacity:.6; cursor:not-allowed; }
   .form-success{
-    text-align:center; padding:2rem 1.5rem; background:#FBE6C8; border-radius:12px;
+    text-align:center; padding:2rem 1.5rem; background:#FDF3E7; border-radius:12px;
     font-family:'Inter',sans-serif; font-size:1rem; color:var(--ink);
   }
   @media (max-width:900px){
@@ -216,7 +216,14 @@
     letter-spacing:.22em; text-transform:uppercase; color:#fff;
     text-decoration:none; padding:1.15rem 0; text-align:center; width:100%;
   }
-  .mobile-menu a:last-child{ color:var(--orange); margin-top:.5rem; }
+  .mobile-menu a:last-child{
+    color:var(--orange); margin-top:1.25rem;
+    border:1px solid var(--orange); border-radius:999px;
+    background:transparent; padding:.8rem 2rem !important; width:auto;
+    transition:background .25s ease, color .25s ease;
+  }
+  .mobile-menu a:last-child:active,
+  .mobile-menu a:last-child:focus{ background:#fff; color:#000; }
 }
 
 /* === footer synced with main site === */
@@ -272,15 +279,22 @@
   .footer-new-tagline{ text-align:left !important; }
   .footer-right{ max-width:100%; text-align:left; }
   .footer-contact-lines{ align-items:flex-start; }
+  .footer-offices-bottom{ display:none !important; }
   .footer-bottom-bar-inner{
     display:block !important; text-align:center !important;
     padding:0 1.35rem !important; position:static !important;
   }
-  .footer-copyright-text{ position:static !important; left:auto !important; }
+  .footer-bottom-bar{ font-size:.78rem; line-height:1.8; color:#fff !important; }
+  .footer-copyright-text{
+    position:static !important; left:auto !important;
+    display:block !important; color:#fff !important;
+  }
   .footer-legal-placeholder{ display:none !important; }
-  .footer-legal-real{ position:static !important; transform:none !important; display:inline !important; }
-  .footer-bottom-bar{ font-size:.78rem; line-height:1.8; }
-  .footer-bottom-bar a{ text-decoration:underline; }
+  .footer-legal-real{
+    position:static !important; transform:none !important;
+    display:block !important; margin-top:.4rem;
+  }
+  .footer-bottom-bar a{ text-decoration:underline; color:#fff !important; }
 }
 
 </style>
@@ -293,6 +307,7 @@
     <a href="index.html#sourcing-map">About</a>
     <a href="index.html#whatwedo">Services</a>
     <a href="index.html#categories">Categories</a>
+    <a href="index.html#leadership">Leadership</a>
     <a href="index.html#contact">Contact</a>
   </nav>
   <div class="topbar-mobile-actions">
@@ -455,6 +470,7 @@
       <span class="footer-copyright-text">&copy; 2026 FABUS GLOBAL LLC &middot; All Rights Reserved</span>
       <span class="footer-legal-placeholder" aria-hidden="true">Terms of Service | Privacy Policy</span>
       <span class="footer-legal-real"><a href="terms-of-service.html">Terms of Service</a> | <a href="privacy-policy.html">Privacy Policy</a></span>
+      <span class="footer-offices-bottom">New Delhi / New York</span>
     </div>
   </div>
 </footer>
