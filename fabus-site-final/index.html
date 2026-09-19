@@ -2117,24 +2117,24 @@
    MOBILE ROUND 6 — hero breathing room + service-card spacing
    ============================================================ */
 @media (max-width:820px){
-  /* hero: video is near-edge-to-edge and fills almost the whole
-     screen below the header (Instagram-reel style); text+button sit
-     in a slim strip underneath. calc() is measured against the
-     actual space below the 62px mobile header, not the raw viewport,
-     so the 83% target is accurate regardless of device height.
-     .panel-wrap keeps min-height:0 so on very short screens the VIDEO
-     is what gives way first — never the headline/button. */
+  /* hero: true edge-to-edge video. Previous attempt set the video's
+     HEIGHT and let width be a side-effect of the aspect-ratio — that
+     derived width was narrower than the screen, so it never reached
+     the edges no matter what max-width said. Fixed by making WIDTH
+     the driver (100%, no side padding on hero-pin) and letting
+     aspect-ratio compute the height from that; text gets its own
+     inset via .side-copy instead of hero-pin's padding. */
   .hero-pin{
     justify-content:flex-start !important;
-    padding:.6rem .8rem .7rem !important;
+    padding:.6rem 0 .7rem !important;
     gap:.5rem !important;
   }
   .panel-wrap{
-    height:calc((100vh - 62px) * 0.83) !important;
+    width:100% !important; max-width:100% !important; height:auto !important;
     min-height:0 !important; flex-shrink:1 !important;
-    max-width:94vw !important;
+    border-radius:0 !important;
   }
-  .side-copy{ flex-shrink:0 !important; }
+  .side-copy{ flex-shrink:0 !important; padding:0 1.1rem !important; }
   /* let the headline wrap naturally instead of 3 hard-broken lines */
   .hero-br{ display:none; }
   .hero-headline{ font-size:1.5rem !important; line-height:1.12 !important; letter-spacing:-0.01em; margin-bottom:.3rem !important; }
@@ -2142,7 +2142,10 @@
   .hero-pin .cta{ padding:.7rem 1.2rem !important; font-size:.7rem !important; }
 }
 @media (max-width:420px){
-  .panel-wrap{ height:calc((100vh - 62px) * 0.79) !important; }
+  /* very short screens (e.g. SE-sized): a full-width video would be
+     taller than the space below the header and squeeze the button
+     out, so pull width in slightly here only, to guarantee it fits */
+  .panel-wrap{ width:90% !important; max-width:90% !important; margin:0 auto; }
   .hero-headline{ font-size:1.35rem !important; }
 }
 
