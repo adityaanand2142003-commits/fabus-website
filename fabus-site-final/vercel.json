@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    { "source": "/about", "destination": "/#sourcing-map", "permanent": true },
+    { "source": "/ceo-desk", "destination": "/#leadership", "permanent": true },
+    { "source": "/services", "destination": "/#whatwedo", "permanent": true },
+    { "source": "/contact", "destination": "/#contact", "permanent": true },
+    { "source": "/categories", "destination": "/#categories", "permanent": true }
+  ]
+}
