@@ -4,6 +4,7 @@
     { "source": "/ceo-desk", "destination": "/#leadership", "permanent": true },
     { "source": "/services", "destination": "/#whatwedo", "permanent": true },
     { "source": "/contact", "destination": "/#contact", "permanent": true },
-    { "source": "/categories", "destination": "/#categories", "permanent": true }
+    { "source": "/categories", "destination": "/#categories", "permanent": true },
+    { "source": "/profile/adityaanand2142003/followers", "destination": "/", "permanent": true }
   ]
 }
