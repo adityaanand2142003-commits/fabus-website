@@ -88,7 +88,18 @@
     #sourcing-map, #whatwedo, #categories, #leadership, #contact{ scroll-margin-top:74px; }
   }
 
-  .hero-scroll{ height:1000vh; position:relative; }
+  /* height:1000vh drives the entire scroll-scrubbed hero animation and, being
+     unscoped, sets the page's total scrollable length on every breakpoint,
+     mobile included. On phones whose browser chrome (address bar) shows and
+     hides as you scroll, some engines recompute plain vh against the CURRENT
+     chrome state rather than a stable baseline — so this 1000x-multiplied
+     value can shift by hundreds of pixels mid-scroll, and every section
+     below the hero shifts with it, which reads as an unrelated section
+     "jumping" into view. svh is pinned to the smallest (chrome-fully-shown)
+     viewport and never recalculates as chrome toggles, so it's used here
+     wherever supported; the vh line stays first as the fallback for engines
+     that don't know svh. */
+  .hero-scroll{ height:1000vh; height:1000svh; position:relative; }
   .hero-pin{
     position:sticky; top:74px; height:calc(100vh - 74px); overflow:hidden;
     display:flex; align-items:center; justify-content:center;
@@ -1102,16 +1113,47 @@
 @media (max-width:640px){
   .scorecard-overlay{ padding:0; }
   .sc-card{ max-width:100%; max-height:100%; height:100%; border-radius:0; }
-  .sc-screen{ padding:1.6rem 1.2rem 1.2rem; }
+  .sc-card-body{ display:flex; flex-direction:column; }
+  .sc-screen{ padding:.9rem 1.1rem .7rem; }
+  .sc-screen.active{ display:flex; flex-direction:column; flex:1; min-height:0; justify-content:center; }
   .sc-progress-wrap{ margin:0 .9rem; max-width:none; }
-  .sc-topbar{ padding:.75rem 1.1rem; }
+  .sc-topbar{ padding:.5rem 1rem; }
   .sc-topbar-brand{ font-size:.72rem; }
-  .sc-dims li{ flex-direction:column; gap:.3rem; }
+
+  /* Landing: trim to the essentials so the CTA is reachable without scrolling */
+  .sc-landing{ padding-top:0; }
+  .sc-meta-badge{ margin:0 0 .7rem; padding:.4rem .9rem; }
+  .sc-headline{ white-space:normal; margin:0 0 .9rem; font-size:1.1rem; }
+  .sc-callout-quote{ padding:.8rem 1rem; margin:0 auto .8rem; }
+  .sc-support-italic{ font-size:.92rem; }
+  .sc-small{ margin-top:.6rem; }
+  .sc-landing-divider, .sc-about-block{ display:none; }
+
+  /* Intro */
+  .sc-intro-headline{ margin:0 0 .6rem; font-size:1.25rem; }
+  .sc-intro-copy{ margin:0 0 .4rem; }
+  .sc-dims{ margin:.8rem 0 .9rem; }
+  .sc-dims li{ flex-direction:column; gap:.3rem; padding:.45rem 0 .45rem .8rem; }
   .sc-dims .sc-dim-tag{ width:auto; }
   .sc-dims-complete li{ flex-direction:row; align-items:center; flex-wrap:wrap; }
   .sc-dims-complete .sc-dim-desc{ flex-basis:100%; margin-left:calc(20px + 1.2rem); }
-  .sc-footer{ padding:.9rem 1.2rem; }
-  .sc-answer{ padding:1.1rem 1.2rem; }
+
+  /* Questions */
+  .sc-qprogress{ margin:0 0 .6rem; }
+  .sc-question{ margin:0 0 .3rem; }
+  .sc-question-hint{ margin:0 0 .7rem; }
+  .sc-answers{ gap:.4rem; }
+  .sc-answer{ padding:.65rem .9rem; }
+
+  /* Lead capture form */
+  .sc-screen[data-screen="leadcapture"]{ justify-content:flex-start; padding-bottom:1rem; }
+  .sc-field{ margin-bottom:.75rem; }
+  .sc-checkbox-row{ margin:.8rem 0 1rem; }
+
+  /* Results report is naturally longer than one screen — keep it top-anchored, not centered */
+  .sc-screen[data-screen="results"]{ justify-content:flex-start; }
+
+  .sc-footer{ padding:.6rem 1.1rem; }
 }
 
 /* Supply With Us */
