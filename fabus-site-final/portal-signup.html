@@ -199,6 +199,7 @@
        "Your account starts here."                                       -->
 
   <p class="portal-form-error" id="formError">Please fill in every field above and check both boxes before continuing.</p>
+  <p class="portal-form-error" id="formNetworkError">Something went wrong submitting your details — please try again in a moment, or email us directly.</p>
 
   <form id="portalSignupForm" novalidate>
     <div class="portal-field">
@@ -435,7 +436,7 @@ var COUNTRIES = [
   }
   phone.addEventListener('keydown', function(e){
     /* allow navigation/editing keys and Ctrl/Cmd combos through */
-    if(e.ctrlKey || e.metaKey || e.key.length > 1) return;
+    if(e.ctrlKey || e.metaKey || !e.key || e.key.length > 1) return;
     if(!/^\d$/.test(e.key)){ e.preventDefault(); showPhoneError(true); }
   });
   phone.addEventListener('paste', function(e){
@@ -461,11 +462,12 @@ var COUNTRIES = [
 })();
 
 /* ---------- Submit: validate explicitly so failures are always visible ---------- */
-var successModal = document.getElementById('successModal');
-var signupForm    = document.getElementById('portalSignupForm');
-var formError     = document.getElementById('formError');
+var successModal   = document.getElementById('successModal');
+var signupForm      = document.getElementById('portalSignupForm');
+var formError       = document.getElementById('formError');
+var formNetworkError = document.getElementById('formNetworkError');
 
-var SIGNUP_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxPgodOgo0b5S9HhINAt361cvOHtPOWZ6G1lphCSu5cj0kw4_CC202hiNoDHhsFMxphWw/exec';
+var SIGNUP_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzg1TA1m4Kg2WllMTZxkBTwZRVptfsRVMSNyYtQOiGH-I6qrU84bzDp0HW6QeKjG5XzWA/exec';
 
 signupForm.addEventListener('submit', function(e){
   e.preventDefault();
@@ -479,13 +481,17 @@ signupForm.addEventListener('submit', function(e){
     return;
   }
   formError.classList.remove('is-visible');
+  formNetworkError.classList.remove('is-visible');
 
   var submitBtn = signupForm.querySelector('button[type="submit"]');
   var originalText = submitBtn ? submitBtn.textContent : '';
   if(submitBtn){ submitBtn.textContent = 'Sending...'; submitBtn.disabled = true; }
 
+  /* Content-Type text/plain avoids a CORS preflight (OPTIONS) request, which Apps Script
+     Web Apps do not handle by default — same pattern as the other forms on this site. */
   fetch(SIGNUP_ENDPOINT, {
     method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body: JSON.stringify({
       name: document.getElementById('signupName').value,
       company: document.getElementById('signupCompany').value,
@@ -498,19 +504,27 @@ signupForm.addEventListener('submit', function(e){
       privacy_agreed: document.getElementById('signupPrivacyAgree').checked
     })
   })
-  .then(function(){
+  .then(function(res){
+    if(!res.ok) throw new Error('Server responded with status ' + res.status);
     if(submitBtn){ submitBtn.textContent = originalText; submitBtn.disabled = false; }
     document.querySelector('.portal-card').classList.add('is-hidden');
     successModal.classList.add('is-open');
   })
-  .catch(function(){
+  .catch(function(err){
+    console.error('[FABUS Portal Signup] submission failed', err);
     if(submitBtn){ submitBtn.textContent = originalText; submitBtn.disabled = false; }
-    formError.classList.add('is-visible');
+    formNetworkError.classList.add('is-visible');
   });
 });
-/* Clear the form-level error the moment the person fixes something */
-signupForm.addEventListener('input', function(){ formError.classList.remove('is-visible'); });
-signupForm.addEventListener('change', function(){ formError.classList.remove('is-visible'); });
+/* Clear the form-level errors the moment the person fixes something */
+signupForm.addEventListener('input', function(){
+  formError.classList.remove('is-visible');
+  formNetworkError.classList.remove('is-visible');
+});
+signupForm.addEventListener('change', function(){
+  formError.classList.remove('is-visible');
+  formNetworkError.classList.remove('is-visible');
+});
 
 /* Wherever the person is meant to land after signing up, or after cancelling. */
 function goBackToSite(){
